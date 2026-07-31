@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: flowcrm-backend
+    env: docker
+    region: ohio
+    plan: free
+    repo: https://github.com/Uttamreddych/MarketingCRM
+    rootDir: backend
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: flowcrm-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: flowcrm-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: flowcrm-db
+          property: password
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: PORT
+        value: 8081
+
+  - type: web
+    name: flowcrm-frontend
+    env: static
+    region: ohio
+    plan: free
+    repo: https://github.com/Uttamreddych/MarketingCRM
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: flowcrm-backend
+          envVarKey: RENDER_EXTERNAL_URL
+
+databases:
+  - name: flowcrm-db
+    databaseName: flowcrm
+    user: flowcrm_user
+    plan: free
+    region: ohio
