@@ -343,6 +343,29 @@ const Auth = () => {
               {authLoading ? 'Signing In...' : isLogin ? 'Sign In to Dashboard' : 'Start Free Trial'}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </motion.button>
+
+            {isLogin && (
+              <motion.button
+                type="button"
+                disabled={authLoading}
+                onClick={async () => {
+                  setUsername('alex');
+                  setPassword('password123');
+                  const success = await login('alex', 'password123');
+                  if (success) {
+                    navigate('/');
+                  } else {
+                    setErrorMsg('Demo login failed');
+                  }
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 mt-3"
+              >
+                <Sparkles size={18} className="text-indigo-400" />
+                Login as Demo User
+              </motion.button>
+            )}
           </form>
 
           <div className="my-6 flex items-center gap-4">
