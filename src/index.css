@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-surface: #0f172a;
+  --color-surface-soft: #1e293b;
+  --color-border: #334155;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* =================== BASE =================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* Light mode overrides */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-surface: #f1f5f9;
+  --color-surface-soft: #ffffff;
+  --color-border: #e2e8f0;
+  --color-primary: #4f46e5;
+}
+
+/* Smooth global theme transition */
+body, aside, header, main, .glass, .glass-card {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  @apply bg-surface text-slate-200 font-sans antialiased;
+  margin: 0;
+}
+
+/* Light mode text overrides */
+:root[data-theme='light'] body {
+  @apply text-slate-800;
+}
+
+:root[data-theme='light'] .glass {
+  background-color: rgba(255,255,255,0.85) !important;
+  border-color: rgba(0,0,0,0.06) !important;
+}
+
+:root[data-theme='light'] .glass-card {
+  background-color: rgba(255,255,255,0.95) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+:root[data-theme='light'] .text-slate-400 { color: #475569; }
+:root[data-theme='light'] .text-slate-500 { color: #64748b; }
+:root[data-theme='light'] .text-white { color: #0f172a; }
+:root[data-theme='light'] .bg-slate-900\/50 { background-color: rgba(241,245,249,0.8) !important; }
+:root[data-theme='light'] input { 
+  background-color: rgba(241,245,249,0.9) !important; 
+  color: #0f172a !important;
+}
+
+/* =================== SCROLLBAR =================== */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { @apply bg-surface; }
+::-webkit-scrollbar-thumb { @apply bg-slate-700 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+
+/* =================== GLASS UTILITIES =================== */
+.glass {
+  @apply bg-surface-soft/80 backdrop-blur-md border border-white/5;
+}
+
+.glass-dark {
+  background-color: rgba(11, 15, 25, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  color: #cbd5e1 !important;
+}
+
+/* Ensure glass-dark children are immune to light mode overrides */
+.glass-dark select,
+.glass-dark input {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+.glass-dark span,
+.glass-dark p,
+.glass-dark a,
+.glass-dark h1,
+.glass-dark h2,
+.glass-dark h3,
+.glass-dark div {
+  color: #cbd5e1 !important;
+}
+.glass-dark .text-white,
+.glass-dark strong,
+.glass-dark font {
+  color: #ffffff !important;
+}
+.glass-dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+.glass-dark .text-slate-500 {
+  color: #64748b !important;
+}
+.glass-dark button {
+  color: #94a3b8 !important;
+}
+.glass-dark button:hover {
+  color: #ffffff !important;
+}
+
+.glass-card {
+  @apply bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+}
+
+/* =================== ANIMATIONS =================== */
+
+/* Floating bob */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Slow spin for decorative rings */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* Shimmer for loading states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.05) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Pulse glow for company color dots */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 4px 1px currentColor; opacity: 1; }
+  50% { box-shadow: 0 0 10px 3px currentColor; opacity: 0.7; }
+}
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Marquee / ticker */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Fade slide up */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.5s ease forwards;
+}
+
+/* Gradient border glow effect */
+.gradient-border {
+  position: relative;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+}
+.gradient-border > * {
+  border-radius: 15px;
+  background: #0f172a;
+}
+
+/* Custom focus ring */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
